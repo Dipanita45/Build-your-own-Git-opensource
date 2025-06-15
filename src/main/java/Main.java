@@ -88,13 +88,13 @@ public class Main {
                 cloneRepository(args);
                 break;
           }
-            // case "add" ->{
-            //     if (args.length < 2) {
-            //         System.out.println("Usage: java Main add <file>");
-            //     } else {
-            //         addToIndex(args[1]);
-            //     }
-            // }
+            case "add" ->{
+                if (args.length < 2) {
+                    System.out.println("Usage: java Main add <file>");
+                } else {
+                    addToIndex(args[1]);
+                }
+            }
 
             default -> System.out.println("Unknown command: " + command);
         }
@@ -410,48 +410,48 @@ public static void cloneRepository(String[] args) throws IOException {
     }
   }
 
-//   public static void addToIndex(String filePath) throws IOException {
-//     File file = new File(filePath);
-//     if (!file.exists()) {
-//         System.out.println("File not found: " + filePath);
-//         return;
-//     }
+  public static void addToIndex(String filePath) throws IOException {
+    File file = new File(filePath);
+    if (!file.exists()) {
+        System.out.println("File not found: " + filePath);
+        return;
+    }
 
-//     // Step 1: Read file content
-//     byte[] fileContents = Files.readAllBytes(file.toPath());
-//     String header = "blob " + fileContents.length + "\0";
-//     byte[] headerBytes = header.getBytes(StandardCharsets.UTF_8);
-//     byte[] fullContent = new byte[headerBytes.length + fileContents.length];
-//     System.arraycopy(headerBytes, 0, fullContent, 0, headerBytes.length);
-//     System.arraycopy(fileContents, 0, fullContent, headerBytes.length, fileContents.length);
+    // Step 1: Read file content
+    byte[] fileContents = Files.readAllBytes(file.toPath());
+    String header = "blob " + fileContents.length + "\0";
+    byte[] headerBytes = header.getBytes(StandardCharsets.UTF_8);
+    byte[] fullContent = new byte[headerBytes.length + fileContents.length];
+    System.arraycopy(headerBytes, 0, fullContent, 0, headerBytes.length);
+    System.arraycopy(fileContents, 0, fullContent, headerBytes.length, fileContents.length);
 
-//     // Step 2: Hash content and save blob
-//     String sha1 = sha1Hex(fullContent); // Already defined in your file
-//     String dir = sha1.substring(0, 2);
-//     String fileSha = sha1.substring(2);
-//     File blobFile = new File(".git/objects/" + dir + "/" + fileSha);
-//     blobFile.getParentFile().mkdirs();
+    // Step 2: Hash content and save blob
+    String sha1 = sha1Hex(fullContent); // Already defined in your file
+    String dir = sha1.substring(0, 2);
+    String fileSha = sha1.substring(2);
+    File blobFile = new File(".git/objects/" + dir + "/" + fileSha);
+    blobFile.getParentFile().mkdirs();
 
-//     try (DeflaterOutputStream out = new DeflaterOutputStream(new FileOutputStream(blobFile))) {
-//         out.write(fullContent);
-//     }
+    try (DeflaterOutputStream out = new DeflaterOutputStream(new FileOutputStream(blobFile))) {
+        out.write(fullContent);
+    }
 
-//     // Step 3: Update .git/index
-//     File indexFile = new File(".git/index");
-//     indexFile.getParentFile().mkdirs();
-//     List<String> index = new ArrayList<>();
+    // Step 3: Update .git/index
+    File indexFile = new File(".git/index");
+    indexFile.getParentFile().mkdirs();
+    List<String> index = new ArrayList<>();
 
-//     if (indexFile.exists()) {
-//         index = Files.readAllLines(indexFile.toPath());
-//         index = index.stream()
-//                 .filter(line -> !line.startsWith(filePath + " "))
-//                 .collect(Collectors.toList());
-//     }
+    if (indexFile.exists()) {
+        index = Files.readAllLines(indexFile.toPath());
+        index = index.stream()
+                .filter(line -> !line.startsWith(filePath + " "))
+                .collect(Collectors.toList());
+    }
 
-//     index.add(filePath + " " + sha1);
-//     Files.write(indexFile.toPath(), index);
-//     System.out.println("Staged: " + filePath);
-// }
+    index.add(filePath + " " + sha1);
+    Files.write(indexFile.toPath(), index);
+    System.out.println("Staged: " + filePath);
+}
 
 
 }
