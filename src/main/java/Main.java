@@ -7,8 +7,11 @@ import java.security.MessageDigest; // Handling file paths
 import java.security.NoSuchAlgorithmException; // Path manipulations
 import java.time.Instant; // For hashing (like Git)
 import java.util.*;
-import java.util.zip.DeflaterOutputStream; // Handling hashing errors
-import java.util.zip.InflaterInputStream; // Handling timestamps
+import java.util.stream.Collectors; // Handling timestamps
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
+
+
 
 public class Main {
     public static void main(String[] args) throws IOException { 
