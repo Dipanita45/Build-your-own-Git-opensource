@@ -1,14 +1,24 @@
-import java.io.*;  // For file handling and input-output operations
-import java.nio.charset.StandardCharsets; // For making API requests
-import java.nio.file.Files; // For URL handling
-import java.nio.file.Path; // Encoding support
-import java.nio.file.Paths; // File reading/writing
-import java.security.MessageDigest; // Handling file paths
-import java.security.NoSuchAlgorithmException; // Path manipulations
-import java.time.Instant; // For hashing (like Git)
-import java.util.*;
-import java.util.zip.DeflaterOutputStream; // Handling hashing errors
-import java.util.zip.InflaterInputStream; // Handling timestamps
+import java.io.ByteArrayOutputStream;  // For file handling and input-output operations
+import java.io.DataInputStream; // For making API requests
+import java.io.File; // For URL handling
+import java.io.FileInputStream; // Encoding support
+import java.io.FileOutputStream; // File reading/writing
+import java.io.IOException; // Handling file paths
+import java.io.UncheckedIOException; // Path manipulations
+import java.nio.charset.StandardCharsets; // For hashing (like Git)
+import java.nio.file.Files;
+import java.nio.file.Path; // Handling hashing errors
+import java.nio.file.Paths; // Handling timestamps
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 public class Main {
     public static void main(String[] args) throws IOException { 
@@ -88,13 +98,13 @@ public class Main {
                 cloneRepository(args);
                 break;
           }
-            case "add" ->{
-                if (args.length < 2) {
-                    System.out.println("Usage: java Main add <file>");
-                } else {
-                    addToIndex(args[1]);
-                }
-            }
+            // case "add" ->{
+            //     if (args.length < 2) {
+            //         System.out.println("Usage: java Main add <file>");
+            //     } else {
+            //         addToIndex(args[1]);
+            //     }
+            // }
 
             default -> System.out.println("Unknown command: " + command);
         }
@@ -410,7 +420,7 @@ public static void cloneRepository(String[] args) throws IOException {
     }
   }
 
-  public static void addToIndex(String filePath) throws IOException {
+  /*public static void addToIndex(String filePath) throws IOException {
     File file = new File(filePath);
     if (!file.exists()) {
         System.out.println("File not found: " + filePath);
@@ -451,7 +461,7 @@ public static void cloneRepository(String[] args) throws IOException {
     index.add(filePath + " " + sha1);
     Files.write(indexFile.toPath(), index);
     System.out.println("Staged: " + filePath);
-}
+} */
 
 
 }
